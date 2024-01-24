@@ -1,14 +1,19 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { ConnectionOptions } from 'typeorm'
+import 'dotenv/config'
 
-const config: TypeOrmModuleOptions = {
+const ormconfig: ConnectionOptions = {
 	type: 'postgres',
-	host: 'localhost',
-	port: 5432,
-	username: 'mediumuser',
-	password: '123',
-	database: 'mediumclone',
+	host: process.env.DATABASE_HOST,
+	port: +process.env.DATABASE_PORT,
+	username: process.env.DATABASE_USERNAME,
+	password: process.env.DATABASE_PASSWORD,
+	database: process.env.DATABASE_NAME,
 	entities: [__dirname + '/**/*.entity{.ts,.js}'],
-	synchronize: true,
+	synchronize: false,
+	migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+	cli: {
+		migrationsDir: 'src/migrations',
+	},
 }
 
-export default config
+export default ormconfig
