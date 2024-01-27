@@ -45,6 +45,10 @@ export class UserSrevice {
 		return await this.userRepository.save(newUser)
 	}
 
+	findById(id: number): Promise<UserEntity> {
+		return this.userRepository.findOne(id)
+	}
+
 	async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
 		const errorResponse = {
 			errors: {
